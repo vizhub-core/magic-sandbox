@@ -97,11 +97,6 @@ function parseCode(template, files) {
     // someone wants to load an html file via ajax...
     if (file.indexOf(".html") >= 0) return;
 
-    /*
-    var find = "[\"\']" + file + "[\"\']"
-    var re = new RegExp(find, 'g')
-    template = template.replace(re, "'" + rawUrl + "'")
-    */
     // we keep a list of all the files we might allow people to XHR request.
     // it would be possible to optimize by using the above commented out regex
     // but if a user programatically generates
@@ -113,7 +108,6 @@ function parseCode(template, files) {
   var filesString = encodeURIComponent(JSON.stringify(referencedFiles));
   var fileNamesString = JSON.stringify(Object.keys(referencedFiles));
   template = '<meta charset="utf-8"><script>' +
-    // 'var __files = ' + filesString + ';' +
     'var __filesURI = \"' + filesString + '\";\n' +
     'var __files = JSON.parse(decodeURIComponent(__filesURI));\n' +
     'var __fileNames = ' + fileNamesString + ';' +
@@ -255,20 +249,10 @@ function parseCode(template, files) {
   template = `<script>(function(){
     window.onerror = function(msg, url, lineNumber) {
       window.parent.postMessage({type: "runtime-error", lineNumber:(lineNumber-` + lines + `), message:msg}, "` + window.location.origin + `")
-      //console.debug('blockbuilder editor error on line: ' + (lineNumber-` + lines + `))
     }
   })()</script>` + template;
 
   return template;
 }
-
-/*
-// keeping this around in case we decide we do want to b64 encode some files
-function b64EncodeUnicode(str) {
-  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-    return String.fromCharCode('0x' + p1);
-  }));
-}
-*/
 
 export default parseCode;
