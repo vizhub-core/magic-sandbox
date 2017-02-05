@@ -1,3 +1,10 @@
+// This function was originally part of Blockbuider.
+// The original code can be found at https://github.com/enjalot/blockbuilder/blob/master/public/js/utils/parseCode.js
+// The original authors and contributors are:
+//  - @enjalot Ian Johnson
+//  - @georules Geoffery Miller
+//  - @pavelloz Paweł Kowalski
+//  - @erikhazzard Erik Hazzard
 function parseCode(template, files) {
   // We parse the user's code to handle some cases where people expect
   // to be able to use relative urls to load files associated with the block
