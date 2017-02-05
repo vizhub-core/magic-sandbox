@@ -1,0 +1,24 @@
+{
+  "name": "magic-sandbox",
+  "version": "0.0.1",
+  "description": "An HTML sandbox supporting multiple dynamic files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curran/magic-sandbox.git"
+  },
+  "author": "Ian Johnson",
+  "contributors": [
+    "Geoffery Miller",
+    "Paweł Kowalski",
+    "Erik Hazzard"
+  ],
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/curran/magic-sandbox/issues"
+  },
+  "homepage": "https://github.com/curran/magic-sandbox#readme"
+}
