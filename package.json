@@ -4,7 +4,7 @@
   "description": "An HTML sandbox supporting multiple dynamic files.",
   "main": "index.js",
   "scripts": {
-    "build": "babel parseCode.js --presets es2015 --plugins transform-es2015-modules-umd --out-file index.js",
+    "build": "babel magicSandbox.js --presets es2015 --plugins transform-es2015-modules-umd --out-file index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "npm run build"
   },
