@@ -4,7 +4,7 @@
   "description": "An HTML sandbox supporting multiple dynamic files.",
   "main": "index.js",
   "scripts": {
-    "build": "babel parseCode.js --presets es2015 --out-file index.js",
+    "build": "babel parseCode.js --presets es2015 --plugins transform-es2015-modules-umd --out-file index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "npm run build"
   },
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/curran/magic-sandbox#readme",
   "devDependencies": {
     "babel-cli": "^6.22.2",
+    "babel-plugin-transform-es2015-modules-umd": "^6.22.0",
     "babel-preset-es2015": "^6.22.0"
   }
 }
