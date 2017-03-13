@@ -7,8 +7,25 @@
     <script src="index.js"></script>
   </head>
   <body>
+    <script type="template" id="template">
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width">
+          <title>Magic Sandbox Test</title>
+        </head>
+        <body>
+          <h1>HELLO</h1>
+        </body>
+      </html>
+    </script>
+    <iframe id="sandbox"></iframe>
     <script>
-      console.log(magicSandbox);
+      var template = document.getElementById("template").textContent;
+      var sandbox = document.getElementById("sandbox");
+      var source = magicSandbox.parseCode(template, {});
+      sandbox.setAttribute("srcdoc", source);
     </script>
   </body>
 </html>
