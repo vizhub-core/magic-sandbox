@@ -17,14 +17,22 @@
         </head>
         <body>
           <h1>HELLO</h1>
+          <p id="p"></p>
+          <script src="fillParagraph.js"><\/script>
         </body>
       </html>
     </script>
     <iframe id="sandbox"></iframe>
     <script>
-      var template = document.getElementById("template").textContent;
+      var template = document.getElementById("template")
+        .textContent.replace(/\\\//g, "/");
       var sandbox = document.getElementById("sandbox");
-      var source = magicSandbox.parseCode(template, {});
+      var files = {
+        "fillParagraph.js": {
+          content: "document.getElementById('p').textContent = 'Dynamic';"
+        }
+      };
+      var source = magicSandbox.parseCode(template, files);
       sandbox.setAttribute("srcdoc", source);
     </script>
   </body>
