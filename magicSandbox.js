@@ -6,7 +6,7 @@
 //  - Paweł Kowalski (@pavelloz)
 //  - Erik Hazzard (@erikhazzard)
 //  - Curran Kelleher (@curran)
-function magicSandbox(template, files) {
+function parseCode(template, files) {
   // We parse the user's code to handle some cases where people expect
   // to be able to use relative urls to load files associated with the block
   // (things like external script files, style files or using XHR to grab data)
@@ -256,4 +256,4 @@ function magicSandbox(template, files) {
   return template;
 }
 
-export default parseCode;
+export { parseCode };
