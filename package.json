@@ -2,11 +2,11 @@
   "name": "magic-sandbox",
   "version": "0.1.0",
   "description": "An HTML sandbox supporting multiple dynamic files.",
-  "main": "index.js",
+  "main": "magicSandbox.js",
   "scripts": {
-    "build": "babel magicSandbox.js --presets es2015 --plugins transform-es2015-modules-umd --out-file index.js",
+    "build": "babel index.js --presets es2015 --plugins transform-es2015-modules-umd --out-file magicSandbox.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build && uglifyjs magicSandbox.js -c -m -o magicSandbox.min.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-plugin-transform-es2015-modules-umd": "^6.22.0",
-    "babel-preset-es2015": "^6.22.0"
+    "babel-preset-es2015": "^6.22.0",
+    "uglifyjs": "^2.4.10"
   }
 }
