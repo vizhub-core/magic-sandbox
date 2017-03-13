@@ -18,7 +18,16 @@
         <body>
           <h1>HELLO</h1>
           <p id="p"></p>
+          <pre id="data"></pre>
           <script src="fillParagraph.js"><\/script>
+          <script>
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+              document.getElementById("data").textContent = this.responseText;
+            };
+            request.open("GET", "data.csv", true);
+            request.send(null); 
+          <\/script>
         </body>
       </html>
     </script>
@@ -30,6 +39,9 @@
       var files = {
         "fillParagraph.js": {
           content: "document.getElementById('p').textContent = 'Dynamic';"
+        },
+        "data.csv": {
+          content: "A,B,C\n1,2,3\n4,5,6"
         }
       };
       var source = magicSandbox.parseCode(template, files);
