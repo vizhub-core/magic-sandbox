@@ -4,9 +4,9 @@
   "description": "An HTML sandbox supporting multiple dynamic files.",
   "main": "magicSandbox.js",
   "scripts": {
-    "build": "babel index.js --presets es2015 --plugins transform-es2015-modules-umd --out-file magicSandbox.js",
+    "build": "babel src/magicSandbox.js --presets es2015 --plugins transform-es2015-modules-umd --out-file magic-sandbox.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "npm run build && uglifyjs magicSandbox.js -c -m -o magicSandbox.min.js"
+    "prepublish": "npm run build && uglifyjs magic-sandbox.js -c -m -o magic-sandbox.min.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,8 @@
     "url": "https://github.com/curran/magic-sandbox/issues"
   },
   "files": [
-    "magicSandbox.min.js"
+    "magic-sandbox.js",
+    "magic-sandbox.min.js"
   ],
   "homepage": "https://github.com/curran/magic-sandbox#readme",
   "devDependencies": {

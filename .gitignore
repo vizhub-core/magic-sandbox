@@ -1,4 +1,4 @@
 node_modules
 *.swp
-magicSandbox.js
-magicSandbox.min.js
+magic-sandbox.js
+magic-sandbox.min.js

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Magic Sandbox Test</title>
-    <script src="index.js"></script>
+    <script src="magic-sandbox.js"></script>
   </head>
   <body>
     <script type="template" id="template">
@@ -33,6 +33,7 @@
     </script>
     <iframe id="sandbox"></iframe>
     <script>
+      console.log(magicSandbox);
       var template = document.getElementById("template")
         .textContent.replace(/\\\//g, "/");
       var sandbox = document.getElementById("sandbox");
