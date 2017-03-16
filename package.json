@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "npm run build && uglifyjs magic-sandbox.js -c -m -o magic-sandbox.min.js"
+    "prepublish": "npm run build && uglifyjs magic-sandbox.js -c -m -o magic-sandbox.min.js",
+    "postpublish": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
