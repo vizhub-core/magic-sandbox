@@ -2,7 +2,7 @@
   "name": "magic-sandbox",
   "version": "0.3.0",
   "description": "An HTML sandbox supporting multiple dynamic files.",
-  "main": "magicSandbox.js",
+  "main": "magic-sandbox.js",
   "scripts": {
     "build": "babel src/magicSandbox.js --presets es2015 --plugins transform-es2015-modules-umd --out-file magic-sandbox.js",
     "test": "echo \"Error: no test specified\" && exit 1",
