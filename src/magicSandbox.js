@@ -6,6 +6,7 @@
 //  - Paweł Kowalski (@pavelloz)
 //  - Erik Hazzard (@erikhazzard)
 //  - Curran Kelleher (@curran)
+//  - Micah Stubbs (@micahstubbs)
 export default function (template, files) {
   // We parse the user's code to handle some cases where people expect
   // to be able to use relative urls to load files associated with the block
@@ -65,6 +66,20 @@ export default function (template, files) {
         return;
       }
     }
+    if (file.indexOf(".coffee") > 0) {
+      // We first try to find instances of loading js files through a <script> tag.
+      // We can't fall back on the raw_url because you can't load scripts with MIME type text.
+      // This does have the benefit of live reloading when changing a script file.
+      var find = "<script.*?src=[\"\']" + file + "[\"\'].*?>";
+      var re = new RegExp(find, 'g');
+      var matches = template.match(re);
+      if (matches) {
+        // if we found one, replace it with the code and return.
+        template = template.replace(re, "<script type='text/coffeescript'>" + files[file].content);
+        lines = lines + files[file].content.split(/\r\n|\r|\n/).length - 1;
+        return;
+      }
+    }
     if (file.indexOf(".css") > 0) {
       // We support loading of css files with relative paths if they are included in the gist.
       // This has the added benefit of live reloading the iframe when editing the style
@@ -84,6 +99,11 @@ export default function (template, files) {
     // someone wants to load an html file via ajax...
     if (file.indexOf(".html") >= 0) return;
 
+    /*
+    var find = "[\"\']" + file + "[\"\']"
+    var re = new RegExp(find, 'g')
+    template = template.replace(re, "'" + rawUrl + "'")
+    */
     // we keep a list of all the files we might allow people to XHR request.
     // it would be possible to optimize by using the above commented out regex
     // but if a user programatically generates
@@ -95,6 +115,7 @@ export default function (template, files) {
   var filesString = encodeURIComponent(JSON.stringify(referencedFiles));
   var fileNamesString = JSON.stringify(Object.keys(referencedFiles));
   template = '<meta charset="utf-8"><script>' +
+    // 'var __files = ' + filesString + ';' +
     'var __filesURI = \"' + filesString + '\";\n' +
     'var __files = JSON.parse(decodeURIComponent(__filesURI));\n' +
     'var __fileNames = ' + fileNamesString + ';' +
@@ -236,8 +257,12 @@ export default function (template, files) {
   template = `<script>(function(){
     window.onerror = function(msg, url, lineNumber) {
       window.parent.postMessage({type: "runtime-error", lineNumber:(lineNumber-` + lines + `), message:msg}, "` + window.location.origin + `")
+      //console.debug('blockbuilder editor error on line: ' + (lineNumber-` + lines + `))
     }
   })()</script>` + template;
+
+  // put the DOCTYPE at the top of the compiled index.html for the user
+  template = '<!DOCTYPE html>' + template;
 
   return template;
 };
