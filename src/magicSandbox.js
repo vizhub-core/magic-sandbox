@@ -262,7 +262,7 @@ export default function (template, files, sandbox_id) {
     }
     window.console_log_native = window.console.log
     window.console.log = function(){
-      window.parent.postMessage({type: "console-log", message: arguments, sandbox_id:${sandbox_id}}, "` + window.location.origin + `"))
+      window.parent.postMessage({type: "console-log", message: arguments, sandbox_id:${sandbox_id}}, "` + window.location.origin + `")
       window.console_log_native(arguments)
     }
   })()</script>` + template;
