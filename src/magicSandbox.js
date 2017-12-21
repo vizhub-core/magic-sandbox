@@ -257,16 +257,16 @@ export default function (template, files, sandbox_id) {
   //XXX and then added by zach, also create a message for console.logs
   template = `<script>(function(){
     window.onerror = function(msg, url, lineNumber) {
-      window.parent.postMessage({type: "runtime-error", lineNumber:(lineNumber-` + lines + `), message:msg, sandbox_id:${sandbox_id}}, "` + window.location.origin + `")
+      window.parent.postMessage({type: "runtime-error", lineNumber:(lineNumber-` + lines + `), message:msg, sandbox_id:'${sandbox_id}'}, "` + window.location.origin + `")
       //console.debug('blockbuilder editor error on line: ' + (lineNumber-` + lines + `))
     }
     window.console_log_native = window.console.log
     window.console.log = function(){
       try {
-        window.parent.postMessage({type: "console-log", message: [...arguments], sandbox_id:${sandbox_id}}, "` + window.location.origin + `")
+        window.parent.postMessage({type: "console-log", message: [...arguments], sandbox_id:'${sandbox_id}'}, "` + window.location.origin + `")
       }
       catch(err){
-        window.parent.postMessage({type: "console-fail", sandbox_id:${sandbox_id}}, "` + window.location.origin + `")
+        window.parent.postMessage({type: "console-fail", sandbox_id:'${sandbox_id}'}, "` + window.location.origin + `")
       }
       window.console_log_native(...arguments)
     }
