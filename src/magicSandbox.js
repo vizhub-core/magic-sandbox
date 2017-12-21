@@ -254,10 +254,16 @@ export default function (template, files) {
   // 6 is a manual count of the added template code for this section of the template
   // we could use this offset to set a marker in the codemirror gutter
   lines = lines + override.split(/\r\n|\r|\n/).length + 6;
+  //XXX and then added by zach, also create a message for console.logs
   template = `<script>(function(){
     window.onerror = function(msg, url, lineNumber) {
       window.parent.postMessage({type: "runtime-error", lineNumber:(lineNumber-` + lines + `), message:msg}, "` + window.location.origin + `")
       //console.debug('blockbuilder editor error on line: ' + (lineNumber-` + lines + `))
+    }
+    window.console_log_native = window.console.log
+    window.console.log = function(){
+      window.parent.postMessage({type: "console-log", message: arguments)
+      window.console_log_native(arguments)
     }
   })()</script>` + template;
 
