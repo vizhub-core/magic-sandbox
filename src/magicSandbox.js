@@ -266,7 +266,7 @@ export default function (template, files, sandbox_id) {
         window.parent.postMessage({type: "console-log", message: [...arguments], sandbox_id:${sandbox_id}}, "` + window.location.origin + `")
       }
       catch(err){
-        window.parent.postMessage({type: "console-log", message: 'CONSOLE-ERROR', sandbox_id:${sandbox_id}}, "` + window.location.origin + `")
+        window.parent.postMessage({type: "console-fail", sandbox_id:${sandbox_id}}, "` + window.location.origin + `")
       }
       window.console_log_native(...arguments)
     }
