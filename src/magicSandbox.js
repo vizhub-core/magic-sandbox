@@ -7,7 +7,7 @@
 //  - Erik Hazzard (@erikhazzard)
 //  - Curran Kelleher (@curran)
 //  - Micah Stubbs (@micahstubbs)
-export default function (template, files, sandbox_id) {
+export default function (template, files, supress_console_log=false) {
   // We parse the user's code to handle some cases where people expect
   // to be able to use relative urls to load files associated with the block
   // (things like external script files, style files or using XHR to grab data)
@@ -257,18 +257,20 @@ export default function (template, files, sandbox_id) {
   //XXX and then added by zach, also create a message for console.logs
   template = `<script>(function(){
     window.onerror = function(msg, url, lineNumber) {
-      window.parent.postMessage({type: "runtime-error", lineNumber:(lineNumber-` + lines + `), message:msg, sandbox_id:'${sandbox_id}'}, "` + window.location.origin + `")
+      window.parent.postMessage({type: "runtime-error", lineNumber:(lineNumber-` + lines + `), message:msg}, "` + window.location.origin + `")
       //console.debug('blockbuilder editor error on line: ' + (lineNumber-` + lines + `))
     }
     window.console_log_native = window.console.log
     window.console.log = function(){
       try {
-        window.parent.postMessage({type: "console-log", message: [...arguments], sandbox_id:'${sandbox_id}'}, "` + window.location.origin + `")
+        window.parent.postMessage({type: "console-log", message: [...arguments]}, "` + window.location.origin + `")
       }
       catch(err){
-        window.parent.postMessage({type: "console-fail", sandbox_id:'${sandbox_id}'}, "` + window.location.origin + `")
+        window.parent.postMessage({type: "console-fail"}, "` + window.location.origin + `")
       }
-      window.console_log_native(...arguments)
+      if (!${supress_console_log}){
+        window.console_log_native(...arguments)
+      }
     }
   })()</script>` + template;
 
