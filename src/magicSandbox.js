@@ -256,8 +256,9 @@ export default function (template, files, supress_console_log=false) {
   lines = lines + override.split(/\r\n|\r|\n/).length + 6;
   //XXX and then added by zach, also create a message for console.logs
   template = `<script>(function(){
-    window.onerror = function(msg, url, lineNumber, colNumber) {
-      window.parent.postMessage({type: "runtime-error", lineNumber:lineNumber, colNumber:colNumber, mLines:${lines}, message:msg}, "` + window.location.origin + `")
+    window.onerror = function(msg, url, lineNumber, colNumber, err) {
+      let filename = err.fileName ? err.fileName : ''
+      window.parent.postMessage({type: "runtime-error", lineNumber:lineNumber, colNumber:colNumber, lineOffset:${lines}, message:msg, filename:filename}, "` + window.location.origin + `")
     }
     window.console_log_native = window.console.log
     window.console.log = function(){
