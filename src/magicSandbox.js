@@ -258,7 +258,7 @@ export default function (template, files, supress_console_log=false) {
   template = `<script>(function(){
     window.onerror = function(msg, url, lineNumber, colNumber, err) {
       let filename = err.fileName ? err.fileName : ''
-      window.parent.postMessage({type: "runtime-error", lineNumber:lineNumber, colNumber:colNumber, lineOffset:${lines}, message:msg, filename:filename}, "` + window.location.origin + `")
+      window.parent.postMessage({type: "runtime-error", lineNumber:lineNumber, colNumber:colNumber, lineOffset:${lines}, message:msg, fileName:fileName}, "` + window.location.origin + `")
     }
     window.console_log_native = window.console.log
     window.console.log = function(){
