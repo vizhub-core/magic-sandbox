@@ -1,6 +1,6 @@
 {
   "name": "@zischwartz/magic-sandbox",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "An HTML sandbox supporting multiple dynamic files.",
   "main": "magic-sandbox.js",
   "scripts": {
