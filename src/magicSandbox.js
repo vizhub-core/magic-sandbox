@@ -7,7 +7,8 @@
 //  - Erik Hazzard (@erikhazzard)
 //  - Curran Kelleher (@curran)
 //  - Micah Stubbs (@micahstubbs)
-export default function (template, files, supress_console_log=false) {
+export default function (template, files, supress_console_log=false, is_https=true) {
+  let secure = is_https ? 's':''
   // We parse the user's code to handle some cases where people expect
   // to be able to use relative urls to load files associated with the block
   // (things like external script files, style files or using XHR to grab data)
@@ -24,7 +25,7 @@ export default function (template, files, supress_console_log=false) {
   var matches = template.match(re);
   if (matches) {
     matches.forEach(function(match, i) {
-      var proto = match.replace("//", "http://");
+      var proto = match.replace("//", `http${secure}://`);
       template = template.replace(match, proto);
     });
   }
@@ -33,7 +34,7 @@ export default function (template, files, supress_console_log=false) {
   var matches = template.match(re);
   if (matches) {
     matches.forEach(function(match, i) {
-      var proto = match.replace("//", "http://");
+      var proto = match.replace("//", `http${secure}://`);
       template = template.replace(match, proto);
     });
   }
