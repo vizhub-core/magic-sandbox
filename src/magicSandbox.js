@@ -265,9 +265,10 @@ export default function (template, files) {
           url: url,
           text: function(){ return Promise.resolve(responseText) },
           json: function(){ return Promise.resolve(responseText).then(JSON.parse) },
-          blob: function(){ return  Promise.resolve(new Blob([responseText])) },
+          blob: function(){ return Promise.resolve(new Blob([responseText])) },
+          // Inspired by https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
           arrayBuffer: function() {
-            var buffer = new ArrayBuffer(responseText.length * 2); // 2 bytes for each char
+            var buffer = new ArrayBuffer(responseText.length * 2);
             var bufferView = new Uint16Array(buffer);
             for (var i = 0, length = responseText.length; i < length; i++) {
               bufferView[i] = responseText.charCodeAt(i);
