@@ -242,6 +242,45 @@ export default function (template, files) {
         that.xhr.send(data)
       }, 0)
     }
+
+    var originalFetch = window.fetch;
+    window.fetch = function(input, init) {
+    
+      var url = input;
+      if (input instanceof Request) {
+        url = input.url
+      }
+    
+      // This is a hack that seems to fix a problem with the way Mapbox is requesting its TileJSON
+      // Not sure what blob:// protocol is anyway...
+      url = url.replace('blob://', 'http://')
+        
+      if(__fileNames.indexOf(url) >= 0) {
+    
+        var responseText = __files[url];
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          statusText: 'ok',
+          url: url,
+          text: function(){ return Promise.resolve(responseText) },
+          json: function(){ return Promise.resolve(responseText).then(JSON.parse) },
+          blob: function(){ return Promise.resolve(new Blob([responseText])) },
+          // Inspired by https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
+          arrayBuffer: function() {
+            var buffer = new ArrayBuffer(responseText.length * 2);
+            var bufferView = new Uint16Array(buffer);
+            for (var i = 0, length = responseText.length; i < length; i++) {
+              bufferView[i] = responseText.charCodeAt(i);
+            }
+            return Promise.resolve(buffer);
+          }
+        })
+      }
+    
+      return originalFetch(input, init)
+    }
+    
   })()</script>`;
 
   var alertOverride = `

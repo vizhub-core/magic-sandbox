@@ -6,7 +6,7 @@
     <title>Magic Sandbox Test</title>
     <script src="magic-sandbox.js"></script>
     <!--
-    <script src="https://unpkg.com/magic-sandbox@0.3.0/magic-sandbox.min.js"></script>
+      <script src="https://unpkg.com/magic-sandbox@0.3.0/magic-sandbox.min.js"></script>
     -->
   </head>
   <body>
@@ -21,7 +21,10 @@
         <body>
           <h1>HELLO</h1>
           <p id="p"></p>
+          <h4>using XMLHttpRequest</h4>
           <pre id="data"></pre>
+          <h4>using fetch</h4>
+          <pre id="data-from-fetch"></pre>
           <script src="fillParagraph.js"><\/script>
           <script>
             var request = new XMLHttpRequest();
@@ -29,7 +32,13 @@
               document.getElementById("data").textContent = this.responseText;
             };
             request.open("GET", "data.csv", true);
-            request.send(null); 
+            request.send(null);
+
+            fetch("data.csv")
+              .then(function(res){ return res.text() })
+              .then(function(text) {
+                document.getElementById("data-from-fetch").textContent = text;
+              });
           <\/script>
         </body>
       </html>
