@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/curran/magic-sandbox.git"
+    "url": "git+https://github.com/datavis-tech/magic-sandbox.git"
   },
   "author": "Ian Johnson",
   "contributors": [
@@ -23,13 +23,13 @@
   ],
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/curran/magic-sandbox/issues"
+    "url": "https://github.com/datavis-tech/magic-sandbox/issues"
   },
   "files": [
     "magic-sandbox.js",
     "magic-sandbox.min.js"
   ],
-  "homepage": "https://github.com/curran/magic-sandbox#readme",
+  "homepage": "https://github.com/datavis-tech/magic-sandbox#readme",
   "devDependencies": {
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-es2015": "^6.24.0",
