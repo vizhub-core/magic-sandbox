@@ -295,7 +295,7 @@ export default function (template, files) {
   lines = lines + override.split(/\r\n|\r|\n/).length + 6;
   template = `<script>(function(){
     window.onerror = function(msg, url, lineNumber) {
-      window.parent.postMessage({type: "runtime-error", lineNumber:(lineNumber-` + lines + `), message:msg}, "` + window.location.origin + `")
+      window.parent.postMessage({type: "runtime-error", lineNumber:(lineNumber-` + lines + `), message:msg}, "` + (global.window ? global.window.location.origin : '') + `")
       //console.debug('blockbuilder editor error on line: ' + (lineNumber-` + lines + `))
     }
   })()</script>` + template;
