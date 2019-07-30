@@ -23,17 +23,14 @@ export default function (template, files) {
   var re = new RegExp(find, 'g');
   var matches = template.match(re);
   if (matches) {
-    matches.forEach(function(match, i) {
-      var proto = match.replace("//", "http://");
-      template = template.replace(match, proto);
-    });
+    matches.forEach(replaceHTTPS);
   }
   var find = "<script.*?src=[\"\']//.*?[\"\'].*?>";
   var re = new RegExp(find, 'g');
   var matches = template.match(re);
   if (matches) {
     matches.forEach(function(match, i) {
-      var proto = match.replace("//", "http://");
+      var proto = match.replace("//", "https://");
       template = template.replace(match, proto);
     });
   }
