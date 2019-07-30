@@ -2,3 +2,4 @@ node_modules
 *.swp
 magic-sandbox.js
 magic-sandbox.min.js
+package-lock.json

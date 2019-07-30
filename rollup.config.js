@@ -1,13 +1,11 @@
-import babel from "rollup-plugin-babel";
+import buble from 'rollup-plugin-buble';
 
-export default {
-  entry: "src/magicSandbox.js",
-  format: "umd",
-  moduleName: "magicSandbox",
-  plugins: [
-    babel({
-      exclude: "node_modules/**"
-    })
-  ],
-  dest: "magic-sandbox.js"
+module.exports = {
+  plugins: [ buble() ],
+  input: 'src/magicSandbox.js',
+  output: {
+    name: 'magicSandbox',
+    file: 'magic-sandbox.js',
+    format: 'umd'
+  }
 };
