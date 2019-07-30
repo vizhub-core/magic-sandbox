@@ -24,7 +24,7 @@ export default function (template, files) {
   var matches = template.match(re);
   if (matches) {
     matches.forEach(function(match, i) {
-      var proto = match.replace("//", "http://");
+      var proto = match.replace("//", "https://");
       template = template.replace(match, proto);
     });
   }
@@ -33,7 +33,7 @@ export default function (template, files) {
   var matches = template.match(re);
   if (matches) {
     matches.forEach(function(match, i) {
-      var proto = match.replace("//", "http://");
+      var proto = match.replace("//", "https://");
       template = template.replace(match, proto);
     });
   }
