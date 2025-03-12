@@ -27,12 +27,11 @@ npm install magic-sandbox
 ## Basic Usage
 
 ```typescript
-import { computeSrcDoc } from "magic-sandbox";
+import { magicSandbox, FileCollection } from "magic-sandbox";
 
 // Define your files collection
-const files = {
-  "index.html": {
-    content: `<!DOCTYPE html>
+const files: FileCollection = {
+  "index.html": `<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="styles.css">
@@ -42,20 +41,13 @@ const files = {
     <script src="script.js"></script>
   </body>
 </html>`,
-  },
-  "styles.css": {
-    content: "h1 { color: blue; }",
-  },
-  "script.js": {
-    content: 'console.log("Hello from JavaScript!");',
-  },
-  "data.json": {
-    content: '{ "message": "This is data that can be fetched" }',
-  },
+  "styles.css": "h1 { color: blue; }",
+  "script.js": 'console.log("Hello from JavaScript!");',
+  "data.json": '{ "message": "This is data that can be fetched" }',
 };
 
 // Generate the HTML
-const html = computeSrcDoc(files);
+const html = magicSandbox(files);
 
 // Use in an iframe
 document.getElementById("sandbox").setAttribute("srcdoc", html);
@@ -76,18 +68,18 @@ The result is a single HTML document that can reference and load multiple files 
 ## Advanced Example: Interactive Code Editor
 
 ```typescript
-import { computeSrcDoc } from "magic-sandbox";
+import { magicSandbox, FileCollection } from "magic-sandbox";
 
 // When files are updated in your editor
-function updatePreview(files) {
+function updatePreview(files: FileCollection) {
   const iframe = document.getElementById("preview");
-  const html = computeSrcDoc(files);
+  const html = magicSandbox(files);
   iframe.setAttribute("srcdoc", html);
 }
 
 // Example editor setup
 const editor = setupCodeEditor(); // Your editor initialization
-editor.onChange((files) => {
+editor.onChange((files: FileCollection) => {
   updatePreview(files);
 });
 ```
