@@ -20,9 +20,13 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "prettier": "prettier {*.*,**/*.*} --write"
+    "prettier": "prettier {*.*,**/*.*} --write",
+    "prepublishOnly": "npm run build"
   },
-  "keywords": [],
+  "keywords": [
+    "sandbox",
+    "magic"
+  ],
   "author": "Ian Johnson (@enjalot)",
   "contributors": [
     "Geoffery Miller (@georules)",
