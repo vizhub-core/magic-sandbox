@@ -1,6 +1,5 @@
 export const basicHTML = {
-  "index.html": {
-    content: `<!DOCTYPE html>
+  "index.html": `<!DOCTYPE html>
 <html>
   <head>
     <title>My HTML Document</title>
@@ -13,5 +12,4 @@ export const basicHTML = {
     </script>
   </body>
 </html>`,
-  },
 };

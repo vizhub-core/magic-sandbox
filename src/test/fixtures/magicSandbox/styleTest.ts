@@ -1,6 +1,5 @@
 export const styleTest = {
-  "index.html": {
-    content: `<!DOCTYPE html>
+  "index.html": `<!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="styles.css">
@@ -11,9 +10,6 @@ export const styleTest = {
       console.log(window.getComputedStyle(document.getElementById('test')).color);
     </script>
   </body>
-</html>`
-  },
-  "styles.css": {
-    content: `#test { color: rgb(255, 0, 0); }`
-  }
+</html>`,
+  "styles.css": `#test { color: rgb(255, 0, 0); }`,
 };

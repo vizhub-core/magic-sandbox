@@ -3,7 +3,7 @@
  */
 export function generateInterceptorScript(
   fileNames: string[],
-  filesString: string
+  filesString: string,
 ): string {
   return `<script>
   (function() {

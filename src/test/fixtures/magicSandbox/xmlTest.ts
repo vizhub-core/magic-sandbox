@@ -1,6 +1,5 @@
 export const xmlTest = {
-  "index.html": {
-    content: `<!DOCTYPE html>
+  "index.html": `<!DOCTYPE html>
 <html>
   <body>
     <script>
@@ -12,12 +11,9 @@ export const xmlTest = {
       xhr.send();
     </script>
   </body>
-</html>`
-  },
-  "data.xml": {
-    content: `<?xml version="1.0" encoding="UTF-8"?>
+</html>`,
+  "data.xml": `<?xml version="1.0" encoding="UTF-8"?>
 <root>
   <item>Test</item>
-</root>`
-  }
+</root>`,
 };

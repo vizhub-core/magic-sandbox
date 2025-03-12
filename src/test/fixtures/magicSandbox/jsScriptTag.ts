@@ -1,13 +1,9 @@
 export const jsScriptTag = {
-  "index.html": {
-    content: `<!DOCTYPE html>
+  "index.html": `<!DOCTYPE html>
 <html>
   <body>
     <script src="index.js"></script>
   </body>
 </html>`,
-  },
-  "index.js": {
-    content: `console.log('Hello, JS!');`,
-  },
+  "index.js": `console.log('Hello, JS!');`,
 };

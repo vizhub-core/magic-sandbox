@@ -1,6 +1,5 @@
 export const protocolTest = {
-  "index.html": {
-    content: `<!DOCTYPE html>
+  "index.html": `<!DOCTYPE html>
 <html>
   <head>
     <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -13,5 +12,4 @@ export const protocolTest = {
     </script>
   </body>
 </html>`,
-  },
 };

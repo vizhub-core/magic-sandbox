@@ -25,7 +25,7 @@ function escapeRegExp(str: string): string {
  * Transforms HTML and files to create a sandboxed environment
  */
 export function magicSandbox(files: FileCollection): string {
-  let template = files["index.html"]?.content || "";
+  let template = files["index.html"] || "";
   const { "index.html": _, ...remainingFiles } = files;
   // Fix protocol-less URLs (//example.com) to use HTTPS
   template = fixProtocollessUrls(template);
@@ -33,18 +33,20 @@ export function magicSandbox(files: FileCollection): string {
   // Process files and track which ones need to be handled by XHR/fetch
   const referencedFiles: Record<string, string> = {};
 
-  for (const [filename, file] of Object.entries(files)) {
-    if (!file.content) continue;
-    if (filename === "index.html" || filename === "thumbnail.png") continue;
+  for (const [filename, fileContent] of Object.entries(remainingFiles)) {
+    if (!fileContent) continue;
 
     // Replace <script src="file.js"> with inline <script>content</script>
     if (filename.endsWith(".js")) {
       const scriptPattern = new RegExp(
         `<script.*?src=["']${escapeRegExp(filename)}["'].*?>`,
-        "g"
+        "g",
       );
       if (template.match(scriptPattern)) {
-        template = template.replace(scriptPattern, `<script>${file.content}`);
+        template = template.replace(
+          scriptPattern,
+          `<script>${fileContent}</script>`,
+        );
         continue;
       }
     }
@@ -53,12 +55,12 @@ export function magicSandbox(files: FileCollection): string {
     if (filename.endsWith(".css")) {
       const linkPattern = new RegExp(
         `<link.*?href=["']${escapeRegExp(filename)}["'].*?>`,
-        "g"
+        "g",
       );
       if (template.match(linkPattern)) {
         template = template.replace(
           linkPattern,
-          `<style>${file.content}</style>`
+          `<style>${fileContent}</style>`,
         );
         continue;
       }
@@ -66,7 +68,7 @@ export function magicSandbox(files: FileCollection): string {
 
     // Skip HTML files for XHR/fetch interception
     if (!filename.endsWith(".html")) {
-      referencedFiles[filename] = file.content;
+      referencedFiles[filename] = fileContent;
     }
   }
 
@@ -77,6 +79,6 @@ export function magicSandbox(files: FileCollection): string {
   // Assemble the final HTML with meta tag and override scripts
   return `<meta charset="utf-8">${generateInterceptorScript(
     fileNames,
-    filesString
+    filesString,
   )}${template}`;
 }
