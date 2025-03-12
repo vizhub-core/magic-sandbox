@@ -1,38 +1,42 @@
 {
   "name": "magic-sandbox",
-  "version": "1.5.0",
-  "description": "An HTML sandbox supporting multiple dynamic files.",
-  "main": "magic-sandbox.js",
-  "scripts": {
-    "build": "rollup -c",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "npm run build && uglifyjs magic-sandbox.js -c -m -o magic-sandbox.min.js",
-    "postpublish": "git push && git push --tags"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/datavis-tech/magic-sandbox.git"
-  },
-  "author": "Ian Johnson",
-  "contributors": [
-    "Geoffery Miller",
-    "Paweł Kowalski",
-    "Erik Hazzard",
-    "Curran Kelleher",
-    "Micah Stubbs"
-  ],
-  "license": "BSD-3-Clause",
-  "bugs": {
-    "url": "https://github.com/datavis-tech/magic-sandbox/issues"
+  "version": "2.0.0",
+  "description": "",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
   "files": [
-    "magic-sandbox.js",
-    "magic-sandbox.min.js"
+    "dist"
   ],
-  "homepage": "https://github.com/datavis-tech/magic-sandbox#readme",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prettier": "prettier {*.*,**/*.*} --write"
+  },
+  "keywords": [],
+  "author": "Ian Johnson (@enjalot)",
+  "contributors": [
+    "Geoffery Miller (@georules)",
+    "Paweł Kowalski (@pavelloz)",
+    "Erik Hazzard (@erikhazzard)",
+    "Curran Kelleher (@curran)",
+    "Micah Stubbs (@micahstubbs)"
+  ],
+  "license": "MIT",
   "devDependencies": {
-    "rollup": "^1.17.0",
-    "rollup-plugin-buble": "^0.19.8",
-    "uglify-js": "^3.6.0"
+    "@types/node": "^22.13.10",
+    "prettier": "^3.5.3",
+    "puppeteer": "^24.4.0",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
   }
 }
