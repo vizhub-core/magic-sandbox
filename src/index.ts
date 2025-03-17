@@ -1,7 +1,8 @@
 import { fixProtocollessUrls } from "./fixProtocollessUrls.js";
 import { generateInterceptorScript } from "./generateInterceptorScript.js";
-import type { FileCollection } from "./types";
-export * from "./types";
+import type { FileCollection } from "./types.js";
+
+export type { FileCollection };
 
 /**
  * Magic Sandbox
