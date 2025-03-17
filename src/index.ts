@@ -1,5 +1,5 @@
-import { fixProtocollessUrls } from "./fixProtocollessUrls";
-import { generateInterceptorScript } from "./generateInterceptorScript";
+import { fixProtocollessUrls } from "./fixProtocollessUrls.js";
+import { generateInterceptorScript } from "./generateInterceptorScript.js";
 import type { FileCollection } from "./types";
 export * from "./types";
 
