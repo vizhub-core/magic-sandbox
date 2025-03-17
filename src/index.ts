@@ -38,15 +38,16 @@ export function magicSandbox(files: FileCollection): string {
     if (!fileContent) continue;
 
     // Replace <script src="file.js"> with inline <script>content</script>
+    // Preserve any attributes like type="module"
     if (filename.endsWith(".js")) {
       const scriptPattern = new RegExp(
-        `<script.*?src=["']${escapeRegExp(filename)}["'].*?>`,
+        `<script(.*?)src=["']${escapeRegExp(filename)}["'](.*?)>`,
         "g",
       );
       if (template.match(scriptPattern)) {
         template = template.replace(
           scriptPattern,
-          `<script>${fileContent}</script>`,
+          `<script$1$2>${fileContent}</script>`,
         );
         continue;
       }
