@@ -36,6 +36,14 @@
     "Micah Stubbs (@micahstubbs)"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vizhub-core/magic-sandbox.git"
+  },
+  "homepage": "https://github.com/vizhub-core/magic-sandbox",
+  "bugs": {
+    "url": "https://github.com/vizhub-core/magic-sandbox/issues"
+  },
   "devDependencies": {
     "@types/node": "^22.13.10",
     "prettier": "^3.5.3",
