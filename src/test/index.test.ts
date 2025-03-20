@@ -7,6 +7,7 @@ import {
   fetchProxy,
   jsScriptTag,
   jsScriptTagTypeModule,
+  jsScriptTagTypeModuleMultipleFiles,
   styleTest,
   xmlTest,
   protocolTest,
@@ -38,8 +39,16 @@ describe("Magic Sandbox", () => {
     await testInBrowser(browser, jsScriptTag, "Hello, JS!");
   });
 
-  it("jsScriptTagTypeModule", async () => {
+  it.only("jsScriptTagTypeModule", async () => {
     await testInBrowser(browser, jsScriptTagTypeModule, "Hello, ES Module!");
+  });
+
+  it("jsScriptTagTypeModuleMultipleFiles", async () => {
+    await testInBrowser(
+      browser,
+      jsScriptTagTypeModuleMultipleFiles,
+      "Hello, ES Module!"
+    );
   });
 
   it("fetchProxy", async () => {

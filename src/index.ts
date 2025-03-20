@@ -28,41 +28,60 @@ function escapeRegExp(str: string): string {
 export function magicSandbox(files: FileCollection): string {
   let template = files["index.html"] || "";
   const { "index.html": _, ...remainingFiles } = files;
+
   // Fix protocol-less URLs (//example.com) to use HTTPS
   template = fixProtocollessUrls(template);
 
-  // Process files and track which ones need to be handled by XHR/fetch
+  // Prepare data structures:
+  // - referencedFiles for XHR/fetch interception (non-HTML)
+  // - importMap to hold .js files as data URLs
   const referencedFiles: Record<string, string> = {};
+  const importMap = { imports: {} as Record<string, string> };
 
   for (const [filename, fileContent] of Object.entries(remainingFiles)) {
     if (!fileContent) continue;
 
-    // Replace <script src="file.js"> with inline <script>content</script>
-    // Preserve any attributes like type="module"
+    // For JS files
     if (filename.endsWith(".js")) {
-      const scriptPattern = new RegExp(
-        `<script(.*?)src=["']${escapeRegExp(filename)}["'](.*?)>`,
-        "g",
+      // Add the file to importMap (for ES modules) using absolute path for better resolution
+      const dataUrl = `data:application/javascript;base64,${btoa(fileContent)}`;
+      importMap.imports[`./${filename}`] = dataUrl;
+
+      // Process script tags based on whether they have type="module" or not
+      const scriptTagRegex = new RegExp(
+        `<script([^>]*)src=["']${escapeRegExp(filename)}["']([^>]*)>(?:.*?</script>)?`,
+        "g"
       );
-      if (template.match(scriptPattern)) {
-        template = template.replace(
-          scriptPattern,
-          `<script$1$2>${fileContent}</script>`,
-        );
-        continue;
-      }
+
+      template = template.replace(scriptTagRegex, (match, attr1, attr2) => {
+        // Check if this script has type="module" attribute
+        const hasTypeModule =
+          attr1.includes('type="module"') || attr2.includes('type="module"');
+
+        if (hasTypeModule) {
+          // For ES modules, use import statement with absolute path
+          return `<script${attr1}${attr2}>import "./${filename}";</script>`;
+        } else {
+          // For regular scripts, inline the content (original behavior)
+          return `<script${attr1}${attr2}>${fileContent}</script>`;
+        }
+      });
+
+      // Track file in the XHR/fetch map
+      referencedFiles[filename] = fileContent;
+      continue;
     }
 
     // Replace <link href="file.css"> with inline <style>content</style>
     if (filename.endsWith(".css")) {
       const linkPattern = new RegExp(
         `<link.*?href=["']${escapeRegExp(filename)}["'].*?>`,
-        "g",
+        "g"
       );
       if (template.match(linkPattern)) {
         template = template.replace(
           linkPattern,
-          `<style>${fileContent}</style>`,
+          `<style>${fileContent}</style>`
         );
         continue;
       }
@@ -74,13 +93,16 @@ export function magicSandbox(files: FileCollection): string {
     }
   }
 
+  // Create import map script tag
+  const importMapScript = `<script type="importmap">${JSON.stringify(importMap)}</script>`;
+
   // Encode file references for use in the sandboxed environment
   const fileNames = Object.keys(referencedFiles);
   const filesString = encodeURIComponent(JSON.stringify(referencedFiles));
 
-  // Assemble the final HTML with meta tag and override scripts
-  return `<meta charset="utf-8">${generateInterceptorScript(
+  // Assemble the final HTML with meta tag, import map and override scripts
+  return `<meta charset="utf-8">${importMapScript}${generateInterceptorScript(
     fileNames,
-    filesString,
+    filesString
   )}${template}`;
 }

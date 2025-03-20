@@ -5,7 +5,7 @@ export const jsScriptTagTypeModule = {
       <script type="importmap">
       {
         "imports": {
-          "greeter": "data:text/javascript;charset=utf-8,export const greeting = \\"Hello, ES Module!\\";"
+          "greeter.js": "data:text/javascript;charset=utf-8,export const greeting = \\"Hello, ES Module!\\";"
         }
       }
       </script>
@@ -14,5 +14,5 @@ export const jsScriptTagTypeModule = {
       <script type="module" src="index.js"></script>
     </body>
   </html>`,
-  "index.js": `import { greeting } from 'greeter';\nconsole.log(greeting);`,
+  "index.js": `import { greeting } from 'greeter.js';\nconsole.log(greeting);`,
 };
