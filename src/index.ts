@@ -43,9 +43,11 @@ export function magicSandbox(files: FileCollection): string {
 
     // For JS files
     if (filename.endsWith(".js")) {
-      // Add the file to importMap (for ES modules) using absolute path for better resolution
-      const dataUrl = `data:application/javascript;base64,${btoa(fileContent)}`;
-      importMap.imports[`./${filename}`] = dataUrl;
+      // const dataUrl = `data:application/javascript;base64,${btoa(fileContent)}`;
+
+      const dataUrl = `data:text/javascript;charset=utf-8,${encodeURIComponent(fileContent)}`;
+
+      importMap.imports[`${filename}`] = dataUrl;
 
       // Process script tags based on whether they have type="module" or not
       const scriptTagRegex = new RegExp(
@@ -55,16 +57,16 @@ export function magicSandbox(files: FileCollection): string {
 
       template = template.replace(scriptTagRegex, (match, attr1, attr2) => {
         // Check if this script has type="module" attribute
-        const hasTypeModule =
-          attr1.includes('type="module"') || attr2.includes('type="module"');
+        // const hasTypeModule =
+        //   attr1.includes('type="module"') || attr2.includes('type="module"');
 
-        if (hasTypeModule) {
-          // For ES modules, use import statement with absolute path
-          return `<script${attr1}${attr2}>import "./${filename}";</script>`;
-        } else {
-          // For regular scripts, inline the content (original behavior)
-          return `<script${attr1}${attr2}>${fileContent}</script>`;
-        }
+        // if (hasTypeModule) {
+        //   // For ES modules, use import statement with absolute path
+        //   return `<script${attr1}${attr2}>import "./${filename}";</script>`;
+        // } else {
+        // For regular scripts, inline the content (original behavior)
+        return `<script${attr1}${attr2}>${fileContent}</script>`;
+        // }
       });
 
       // Track file in the XHR/fetch map

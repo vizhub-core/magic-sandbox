@@ -39,11 +39,11 @@ describe("Magic Sandbox", () => {
     await testInBrowser(browser, jsScriptTag, "Hello, JS!");
   });
 
-  it.only("jsScriptTagTypeModule", async () => {
+  it("jsScriptTagTypeModule", async () => {
     await testInBrowser(browser, jsScriptTagTypeModule, "Hello, ES Module!");
   });
 
-  it("jsScriptTagTypeModuleMultipleFiles", async () => {
+  it.only("jsScriptTagTypeModuleMultipleFiles", async () => {
     await testInBrowser(
       browser,
       jsScriptTagTypeModuleMultipleFiles,
