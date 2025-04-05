@@ -40,12 +40,12 @@ export function magicSandbox(files: FileCollection): string {
     if (filename.endsWith(".js")) {
       const scriptPattern = new RegExp(
         `<script(.*?)src=["']${escapeRegExp(filename)}["'](.*?)>`,
-        "g"
+        "g",
       );
       if (template.match(scriptPattern)) {
         template = template.replace(
           scriptPattern,
-          `<script$1$2>${fileContent}</script>`
+          `<script$1$2>${fileContent}</script>`,
         );
         continue;
       }
@@ -55,12 +55,12 @@ export function magicSandbox(files: FileCollection): string {
     if (filename.endsWith(".css")) {
       const linkPattern = new RegExp(
         `<link.*?href=["']${escapeRegExp(filename)}["'].*?>`,
-        "g"
+        "g",
       );
       if (template.match(linkPattern)) {
         template = template.replace(
           linkPattern,
-          `<style>${fileContent}</style>`
+          `<style>${fileContent}</style>`,
         );
         continue;
       }
@@ -79,6 +79,6 @@ export function magicSandbox(files: FileCollection): string {
   // Assemble the final HTML with meta tag and override scripts
   return `<meta charset="utf-8">${generateInterceptorScript(
     fileNames,
-    filesString
+    filesString,
   )}${template}`;
 }
