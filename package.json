@@ -50,5 +50,8 @@
     "puppeteer": "^24.4.0",
     "typescript": "^5.8.2",
     "vitest": "^3.0.8"
+  },
+  "dependencies": {
+    "@vizhub/viz-types": "^0.1.0"
   }
 }
