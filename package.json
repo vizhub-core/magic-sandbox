@@ -21,7 +21,8 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "prettier": "prettier {*.*,**/*.*} --write",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "upgrade": "ncu -u"
   },
   "keywords": [
     "sandbox",
@@ -45,11 +46,12 @@
     "url": "https://github.com/vizhub-core/magic-sandbox/issues"
   },
   "devDependencies": {
-    "@types/node": "^22.13.10",
+    "@types/node": "^22.14.0",
+    "npm-check-updates": "^17.1.16",
     "prettier": "^3.5.3",
-    "puppeteer": "^24.4.0",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.8"
+    "puppeteer": "^24.6.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
   },
   "dependencies": {
     "@vizhub/viz-types": "^0.1.0"
