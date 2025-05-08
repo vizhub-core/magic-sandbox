@@ -44,7 +44,7 @@ export function magicSandbox(files: FileCollection): string {
       );
       if (template.match(scriptPattern)) {
         // Escape dollar signs in the JavaScript content
-        const escapedContent = fileContent.replace(/\$/g, '$$$$');
+        const escapedContent = fileContent.replace(/\$/g, "$$$$");
         template = template.replace(
           scriptPattern,
           `<script$1$2>${escapedContent}</script>`,
@@ -78,9 +78,32 @@ export function magicSandbox(files: FileCollection): string {
   const fileNames = Object.keys(referencedFiles);
   const filesString = encodeURIComponent(JSON.stringify(referencedFiles));
 
-  // Assemble the final HTML with meta tag and override scripts
-  return `<meta charset="utf-8">${generateInterceptorScript(
-    fileNames,
-    filesString,
-  )}${template}`;
+  // Create the interceptor script
+  const interceptorScript = generateInterceptorScript(fileNames, filesString);
+  const metaAndScript = `<meta charset="utf-8">${interceptorScript}`;
+
+  // Extract DOCTYPE if present
+  let doctype = "";
+  const doctypeMatch = template.match(/<!DOCTYPE[^>]*>/i);
+  if (doctypeMatch) {
+    doctype = doctypeMatch[0];
+    // Remove DOCTYPE from the template as we'll add it back at the beginning
+    template = template.replace(doctypeMatch[0], "");
+  }
+
+  // Insert meta charset and interceptor script in the head
+  if (template.includes("<head>")) {
+    template = template.replace("<head>", `<head>${metaAndScript}`);
+  } else if (template.includes("<html>")) {
+    template = template.replace(
+      "<html>",
+      `<html><head>${metaAndScript}</head>`,
+    );
+  } else {
+    // Fallback for documents without proper HTML structure
+    return `${doctype}<html><head>${metaAndScript}</head><body>${template}</body></html>`;
+  }
+
+  // Add DOCTYPE back at the beginning
+  return `${doctype}${template}`;
 }
