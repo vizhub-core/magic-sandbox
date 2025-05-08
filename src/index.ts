@@ -43,9 +43,11 @@ export function magicSandbox(files: FileCollection): string {
         "g",
       );
       if (template.match(scriptPattern)) {
+        // Escape dollar signs in the JavaScript content
+        const escapedContent = fileContent.replace(/\$/g, '$$$$');
         template = template.replace(
           scriptPattern,
-          `<script$1$2>${fileContent}</script>`,
+          `<script$1$2>${escapedContent}</script>`,
         );
         continue;
       }
