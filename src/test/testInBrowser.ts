@@ -3,6 +3,8 @@ import { expect } from "vitest";
 import { magicSandbox } from "../index";
 import { FileCollection } from "@vizhub/viz-types";
 
+const DEBUG = false;
+
 export async function testInBrowser(
   browser: Browser,
   files: FileCollection,
@@ -14,7 +16,7 @@ export async function testInBrowser(
     const logs: string[] = [];
     page.on("console", (message) => logs.push(message.text()));
 
-    console.log(magicSandbox(files));
+    DEBUG && console.log(magicSandbox(files));
 
     // Load the HTML
     await page.setContent(magicSandbox(files));
@@ -22,7 +24,7 @@ export async function testInBrowser(
     // Wait a bit for scripts to execute
     await new Promise((resolve) => setTimeout(resolve, 100));
 
-    console.log("Logs:", logs);
+    DEBUG && console.log("Logs:", logs);
 
     // Check console output
     expect(logs).toContain(expectedLog);
