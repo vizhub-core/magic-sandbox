@@ -3,7 +3,7 @@ import { expect } from "vitest";
 import { magicSandbox } from "../index";
 import { FileCollection } from "@vizhub/viz-types";
 
-const DEBUG = false;
+const DEBUG = true;
 
 export async function testInBrowser(
   browser: Browser,

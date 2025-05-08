@@ -39,7 +39,7 @@ export function magicSandbox(files: FileCollection): string {
     // Preserve any attributes like type="module"
     if (filename.endsWith(".js")) {
       const scriptPattern = new RegExp(
-        `<script(.*?)src=["']${escapeRegExp(filename)}["'](.*?)>`,
+        `<script(.*?)src=["']${escapeRegExp(filename)}["'](.*?)>[\\s\\S]*?<\\/script>`,
         "g",
       );
       if (template.match(scriptPattern)) {
