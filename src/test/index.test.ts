@@ -10,6 +10,7 @@ import {
   styleTest,
   xmlTest,
   protocolTest,
+  jsScriptTagWithDollarSigns,
 } from "./fixtures";
 
 let browser: Browser;
@@ -36,6 +37,10 @@ describe("Magic Sandbox", () => {
 
   it("jsScriptTag", async () => {
     await testInBrowser(browser, jsScriptTag, "Hello, JS!");
+  });
+
+  it("jsScriptTagWithDollarSigns", async () => {
+    await testInBrowser(browser, jsScriptTagWithDollarSigns, "11 22");
   });
 
   it("jsScriptTagTypeModule", async () => {

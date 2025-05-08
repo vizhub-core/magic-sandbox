@@ -6,7 +6,7 @@ import { FileCollection } from "@vizhub/viz-types";
 export async function testInBrowser(
   browser: Browser,
   files: FileCollection,
-  expectedLog: string,
+  expectedLog: string
 ) {
   const page: Page = await browser.newPage();
   try {
@@ -14,11 +14,15 @@ export async function testInBrowser(
     const logs: string[] = [];
     page.on("console", (message) => logs.push(message.text()));
 
+    console.log(magicSandbox(files));
+
     // Load the HTML
     await page.setContent(magicSandbox(files));
 
     // Wait a bit for scripts to execute
     await new Promise((resolve) => setTimeout(resolve, 100));
+
+    console.log("Logs:", logs);
 
     // Check console output
     expect(logs).toContain(expectedLog);

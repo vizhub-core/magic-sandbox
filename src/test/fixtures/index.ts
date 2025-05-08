@@ -5,3 +5,4 @@ export { fetchProxy } from "./fetchProxy";
 export { styleTest } from "./styleTest";
 export { xmlTest } from "./xmlTest";
 export { protocolTest } from "./protocolTest";
+export { jsScriptTagWithDollarSigns } from "./jsScriptTagWithDollarSigns";
